@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -17,10 +18,12 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+ const [loading, setLoading] = useState(true);
   const [popup, setPopup] = useState(false);
   const [time, setTime] = useState({ d: "--", h: "--", m: "--" });
 
   useEffect(() => {
+    setTimeout(() => setLoading(false), 2000);
     const target = new Date("2027-02-19T09:00:00");
 
     const update = () => {
@@ -43,7 +46,16 @@ export default function Home() {
     setPopup(true);
     setTimeout(() => setPopup(false), 1200);
   };
-
+if (loading) {
+  return (
+    <div className="flex items-center justify-center h-screen bg-blue-900 text-white">
+      <div className="text-center animate-pulse">
+        <img src="/icon-192.png" className="h-16 mx-auto mb-4" />
+        <p className="text-lg font-semibold">IACTACON 2027</p>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="app-bg">
 
