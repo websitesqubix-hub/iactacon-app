@@ -48,10 +48,25 @@ export default function Home() {
   };
 if (loading) {
   return (
-    <div className="flex items-center justify-center h-screen bg-blue-900 text-white">
+    <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-800 to-blue-950 text-white">
       <div className="text-center animate-pulse">
-        <img src="/icon-192.png" className="h-16 mx-auto mb-4" />
-        <p className="text-lg font-semibold">IACTACON 2027</p>
+
+        {/* Main Logo */}
+        <img
+          src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"
+          className="h-16 mx-auto mb-3"
+        />
+
+        {/* Secondary Logo */}
+        <img
+          src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"
+          className="h-10 mx-auto mb-4"
+        />
+
+        <p className="text-lg font-semibold tracking-wide">
+          IACTACON 2027
+        </p>
+
       </div>
     </div>
   );
@@ -141,7 +156,14 @@ if (loading) {
         </div>
 
       </div>
+<div className="text-center mt-6 mb-2 opacity-80">
+  <p className="text-xs mb-2">App Developed By</p>
 
+  <img
+    src="https://iactacon2027.com/wp-content/uploads/2026/02/Qubix-Logo-02.png"
+    className="h-6 mx-auto opacity-90 hover:opacity-100 transition"
+  />
+</div>
       {/* BOTTOM NAV */}
       <div className="bottom-nav">
         <NavItem icon={Calendar} label="Home" />
