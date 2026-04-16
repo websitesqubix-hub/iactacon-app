@@ -24,7 +24,7 @@ export default function Home() {
     const target = new Date("2027-02-19T09:00:00");
 
     const update = () => {
-      const diff = target - new Date();
+     const diff = target.getTime() - new Date().getTime();
       if (diff > 0) {
         setTime({
           d: Math.floor(diff / 86400000),
