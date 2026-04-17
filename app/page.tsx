@@ -18,7 +18,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [popup, setPopup] = useState(false);
   const [time, setTime] = useState({ d: "--", h: "--", m: "--" });
-  const [user, setUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("home");
 
   // LOGIN CHECK
@@ -26,8 +25,6 @@ export default function Home() {
     const u = localStorage.getItem("user");
     if (!u) {
       window.location.href = "/login";
-    } else {
-      setUser(JSON.parse(u));
     }
   }, []);
 
@@ -81,7 +78,7 @@ export default function Home() {
 
       <div className="strip">SAFETY · SCIENCE · SKILL</div>
 
-      <div className="container pb-24">
+      <div className="container" style={{ paddingBottom: "80px" }}>
 
         {/* COUNTDOWN */}
         <div className="countdown">
@@ -104,20 +101,20 @@ export default function Home() {
         {/* GRID */}
         <div className="grid">
 
-          <Tile icon={<Calendar size={18}/>} label="Today's Program" onClick={comingSoon}/>
-          <Tile icon={<Users size={18}/>} label="Our Speakers" onClick={comingSoon}/>
-          <Tile icon={<FileText size={18}/>} label="Scientific Program" onClick={comingSoon}/>
-          <Tile icon={<Users size={18}/>} label="Attendees" onClick={comingSoon}/>
+          <Tile label="Today's Program" onClick={comingSoon}/>
+          <Tile label="Our Speakers" onClick={comingSoon}/>
+          <Tile label="Scientific Program" onClick={comingSoon}/>
+          <Tile label="Attendees" onClick={comingSoon}/>
 
-          <Tile icon={<Users size={18}/>} label="Invite Friend" onClick={comingSoon}/>
-          <Tile icon={<MapPin size={18}/>} label="Venue Map" onClick={comingSoon}/>
-          <Tile icon={<Download size={18}/>} label="Certificate" onClick={comingSoon}/>
-          <Tile icon={<Bell size={18}/>} label="Quiz" onClick={comingSoon}/>
+          <Tile label="Invite Friend" onClick={comingSoon}/>
+          <Tile label="Venue Map" onClick={comingSoon}/>
+          <Tile label="Certificate" onClick={comingSoon}/>
+          <Tile label="Quiz" onClick={comingSoon}/>
 
-          <Tile icon={<Book size={18}/>} label="Abstract" onClick={comingSoon}/>
-          <Tile icon={<Building size={18}/>} label="Accommodation" onClick={comingSoon}/>
-          <Tile icon={<Bell size={18}/>} label="Feedback" onClick={comingSoon}/>
-          <Tile icon={<FileText size={18}/>} label="My Registration" onClick={comingSoon}/>
+          <Tile label="Abstract" onClick={comingSoon}/>
+          <Tile label="Accommodation" onClick={comingSoon}/>
+          <Tile label="Feedback" onClick={comingSoon}/>
+          <Tile label="My Registration" onClick={comingSoon}/>
 
         </div>
 
@@ -137,10 +134,10 @@ export default function Home() {
 
       {/* BOTTOM NAV */}
       <div className="bottom-nav">
-        <Nav icon={<Home size={18}/>} label="Home" active={activeTab==="home"} onClick={()=>setActiveTab("home")}/>
-        <Nav icon={<Calendar size={18}/>} label="Schedule" active={activeTab==="schedule"} onClick={()=>comingSoon()}/>
-        <Nav icon={<Users size={18}/>} label="Speakers" active={activeTab==="speakers"} onClick={()=>comingSoon()}/>
-        <Nav icon={<User size={18}/>} label="Profile" active={activeTab==="profile"} onClick={()=>comingSoon()}/>
+        <Nav label="Home" active={activeTab==="home"} onClick={()=>setActiveTab("home")}/>
+        <Nav label="Schedule" onClick={comingSoon}/>
+        <Nav label="Speakers" onClick={comingSoon}/>
+        <Nav label="Profile" onClick={comingSoon}/>
       </div>
 
     </div>
@@ -148,20 +145,18 @@ export default function Home() {
 }
 
 /* TILE */
-function Tile({ icon, label, onClick }: any) {
+function Tile({ label, onClick }: any) {
   return (
     <div className="tile" onClick={onClick}>
-      <div className="icon">{icon}</div>
       <div className="label">{label}</div>
     </div>
   );
 }
 
-/* NAV ITEM */
-function Nav({ icon, label, active, onClick }: any) {
+/* NAV */
+function Nav({ label, active, onClick }: any) {
   return (
     <div className={`nav-item ${active ? "active" : ""}`} onClick={onClick}>
-      {icon}
       <div>{label}</div>
     </div>
   );
