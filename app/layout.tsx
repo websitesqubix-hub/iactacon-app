@@ -24,10 +24,10 @@ export const metadata: Metadata = {
   },
 
   appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "IACTACON 2027",
-  },
+  capable: true,
+  statusBarStyle: "black-translucent",
+  title: "IACTACON 2027",
+},
 };
 export default function RootLayout({
   children,
