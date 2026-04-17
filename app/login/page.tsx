@@ -25,13 +25,34 @@ export default function Login() {
 
   return (
     <div className="login-container">
+
       <div className="login-box">
 
+        {/* 🔥 HEADER TEXT */}
+        <h2 style={{
+          textAlign: "center",
+          marginBottom: "12px",
+          color: "#0a2a6e",
+          fontWeight: "700",
+          letterSpacing: "1px"
+        }}>
+          IACTACON 2027 KOLKATA
+        </h2>
+
+        {/* 🔥 LOGOS SAME SIZE + CIRCULAR */}
         <div className="login-logos">
-          <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"/>
-          <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"/>
+
+          <div className="logo-circle">
+            <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"/>
+          </div>
+
+          <div className="logo-circle">
+            <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"/>
+          </div>
+
         </div>
 
+        {/* LOGIN CARD */}
         <div className="login-card">
 
           <div className="login-title">Delegate Login</div>
@@ -54,9 +75,23 @@ export default function Login() {
             Login
           </button>
 
-          {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+          {error && (
+            <p style={{ color: "red", textAlign: "center", marginTop: 10 }}>
+              {error}
+            </p>
+          )}
 
         </div>
+
+        {/* 🔥 BOTTOM IMAGE */}
+        <img
+          src="/login-page-bottom.png"
+          style={{
+            marginTop: "20px",
+            borderRadius: "12px"
+          }}
+        />
+
       </div>
     </div>
   );
