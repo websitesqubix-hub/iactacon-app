@@ -199,3 +199,76 @@ html, body {
   position: relative;
   z-index: 1;
 }
+/* LOGIN SAFE */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.login-box {
+  width: 90%;
+  max-width: 360px;
+}
+
+.login-logos {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.login-logos img {
+  width: 50px;
+}
+
+.login-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.login-btn {
+  width: 100%;
+  background: #c8102e;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* PARTICLES */
+.bg-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-particles span {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0.08;
+  animation: float 12s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+
+.main-app > * {
+  position: relative;
+  z-index: 1;
+}
