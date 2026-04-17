@@ -8,6 +8,10 @@ import {
   MapPin,
   Download,
   Bell,
+  Book,
+  Building,
+  Home,
+  User,
 } from "lucide-react";
 
 export default function Home() {
@@ -15,6 +19,7 @@ export default function Home() {
   const [popup, setPopup] = useState(false);
   const [time, setTime] = useState({ d: "--", h: "--", m: "--" });
   const [user, setUser] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState("home");
 
   // LOGIN CHECK
   useEffect(() => {
@@ -54,19 +59,12 @@ export default function Home() {
     setTimeout(() => setPopup(false), 1200);
   };
 
-  if (loading) {
-    return (
-      <div className="login-container">
-        <div className="login-box" style={{ textAlign: "center" }}>
-          <img
-            src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"
-            style={{ width: 50, margin: "auto" }}
-          />
-          <p style={{ marginTop: 10 }}>Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  const logout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  };
+
+  if (loading) return null;
 
   return (
     <div className="app-bg">
@@ -83,7 +81,7 @@ export default function Home() {
 
       <div className="strip">SAFETY · SCIENCE · SKILL</div>
 
-      <div className="container">
+      <div className="container pb-24">
 
         {/* COUNTDOWN */}
         <div className="countdown">
@@ -116,11 +114,16 @@ export default function Home() {
           <Tile icon={<Download size={18}/>} label="Certificate" onClick={comingSoon}/>
           <Tile icon={<Bell size={18}/>} label="Quiz" onClick={comingSoon}/>
 
+          <Tile icon={<Book size={18}/>} label="Abstract" onClick={comingSoon}/>
+          <Tile icon={<Building size={18}/>} label="Accommodation" onClick={comingSoon}/>
           <Tile icon={<Bell size={18}/>} label="Feedback" onClick={comingSoon}/>
           <Tile icon={<FileText size={18}/>} label="My Registration" onClick={comingSoon}/>
-          <Tile icon={<MapPin size={18}/>} label="Route Map" onClick={comingSoon}/>
-          <Tile icon={<FileText size={18}/>} label="Workshops" onClick={comingSoon}/>
 
+        </div>
+
+        {/* LOGOUT */}
+        <div className="logout">
+          <button onClick={logout}>Logout</button>
         </div>
 
       </div>
@@ -132,15 +135,34 @@ export default function Home() {
         </div>
       )}
 
+      {/* BOTTOM NAV */}
+      <div className="bottom-nav">
+        <Nav icon={<Home size={18}/>} label="Home" active={activeTab==="home"} onClick={()=>setActiveTab("home")}/>
+        <Nav icon={<Calendar size={18}/>} label="Schedule" active={activeTab==="schedule"} onClick={()=>comingSoon()}/>
+        <Nav icon={<Users size={18}/>} label="Speakers" active={activeTab==="speakers"} onClick={()=>comingSoon()}/>
+        <Nav icon={<User size={18}/>} label="Profile" active={activeTab==="profile"} onClick={()=>comingSoon()}/>
+      </div>
+
     </div>
   );
 }
 
+/* TILE */
 function Tile({ icon, label, onClick }: any) {
   return (
     <div className="tile" onClick={onClick}>
       <div className="icon">{icon}</div>
       <div className="label">{label}</div>
+    </div>
+  );
+}
+
+/* NAV ITEM */
+function Nav({ icon, label, active, onClick }: any) {
+  return (
+    <div className={`nav-item ${active ? "active" : ""}`} onClick={onClick}>
+      {icon}
+      <div>{label}</div>
     </div>
   );
 }
