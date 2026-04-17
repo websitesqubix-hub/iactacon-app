@@ -1,10 +1,3 @@
-useEffect(() => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js")
-      .then(() => console.log("SW registered"));
-  }
-}, []);
-import { useState, useEffect } from "react";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -24,16 +17,26 @@ import {
 } from "lucide-react";
 
 export default function Home() {
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [popup, setPopup] = useState(false);
   const [time, setTime] = useState({ d: "--", h: "--", m: "--" });
 
+  // ✅ SERVICE WORKER (CORRECT PLACE)
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  }, []);
+
+  // ✅ COUNTDOWN
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
+
     const target = new Date("2027-02-19T09:00:00");
 
     const update = () => {
-     const diff = target.getTime() - new Date().getTime();
+      const diff = target.getTime() - new Date().getTime();
+
       if (diff > 0) {
         setTime({
           d: Math.floor(diff / 86400000),
@@ -52,55 +55,35 @@ export default function Home() {
     setPopup(true);
     setTimeout(() => setPopup(false), 1200);
   };
-if (loading) {
-  return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-800 to-blue-950 text-white">
-      <div className="text-center animate-pulse">
 
-        {/* Main Logo */}
-        <img
-          src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"
-          className="h-16 mx-auto mb-3"
-        />
-
-        {/* Secondary Logo */}
-        <img
-          src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"
-          className="h-10 mx-auto mb-4"
-        />
-
-        <p className="text-lg font-semibold tracking-wide">
-          IACTACON 2027
-        </p>
-
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-800 to-blue-950 text-white">
+        <div className="text-center animate-pulse">
+          <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg" className="h-16 mx-auto mb-3" />
+          <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg" className="h-10 mx-auto mb-4" />
+          <p className="text-lg font-semibold">IACTACON 2027</p>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+
   return (
     <div className="app-bg">
 
-      {/* HEADER */}
       <div className="header">
         <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"/>
         <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"/>
-
         <div>
           <div className="title">IACTACON 2027</div>
-          <div className="subtitle">
-            30th National Conference · Kolkata
-          </div>
+          <div className="subtitle">30th National Conference · Kolkata</div>
         </div>
       </div>
 
-      {/* STRIP */}
-      <div className="strip">
-        SAFETY · SCIENCE · SKILL
-      </div>
+      <div className="strip">SAFETY · SCIENCE · SKILL</div>
 
       <div className="container pb-24">
 
-        {/* COUNTDOWN */}
         <div className="countdown">
           <div>
             <div className="cd-label">CONFERENCE COUNTDOWN</div>
@@ -109,76 +92,20 @@ if (loading) {
             </div>
           </div>
 
-          <a
-            href="https://iactacon2027.com/registration"
-            target="_blank"
-            className="btn"
-          >
+          <a href="https://iactacon2027.com/registration" target="_blank" className="btn">
             REGISTER
           </a>
         </div>
 
-        {/* GRID */}
         <div className="grid">
-
           <Tile icon={Calendar} label="Today's Program" onClick={comingSoon}/>
           <Tile icon={Users} label="Our Speakers" onClick={comingSoon}/>
           <Tile icon={FileText} label="Scientific Program" onClick={comingSoon}/>
           <Tile icon={Users} label="Attendees" onClick={comingSoon}/>
-
-          <Tile icon={User} label="Invite Friend" red onClick={comingSoon}/>
-          <Tile icon={Book} label="Workshops" onClick={comingSoon}/>
-          <Tile icon={Download} label="Download Certificate" red onClick={comingSoon}/>
-          <Tile icon={Bell} label="Quiz" onClick={comingSoon}/>
-
-          <Tile icon={FileText} label="Feedback" onClick={comingSoon}/>
-          <Tile icon={User} label="My Registration" red onClick={comingSoon}/>
-          <Tile icon={Navigation} label="Route Map to Venue" onClick={comingSoon}/>
-          <Tile icon={MapPin} label="Parking Instructions" onClick={comingSoon}/>
-
-          <Tile icon={Book} label="Note" onClick={comingSoon}/>
-          <Tile icon={Download} label="Downloads" red onClick={comingSoon}/>
-          <Tile icon={MapPin} label="Attractions" onClick={comingSoon}/>
-          <Tile icon={Building} label="Venue Layout" onClick={comingSoon}/>
-
-          <Tile icon={Users} label="Exhibitors" onClick={comingSoon}/>
-          <Tile icon={MapPin} label="Accommodation & Travel" red onClick={comingSoon}/>
-          <Tile icon={Info} label="Lost & Found" onClick={comingSoon}/>
-
-        </div>
-
-        {/* VENUE INFO */}
-        <div className="info-card">
-          <h3>Conference Details</h3>
-          <div className="info-row">
-            📍 Ozone Convention Centre, Fairfield Marriott, Kolkata
-          </div>
-          <div className="info-row">
-            📅 19–21 February 2027
-          </div>
-          <div className="info-row">
-            🧪 Theme: Safety · Science · Skill
-          </div>
         </div>
 
       </div>
-<div className="text-center mt-6 mb-2 opacity-80">
-  <p className="text-xs mb-2">App Developed By</p>
 
-  <img
-    src="https://iactacon2027.com/wp-content/uploads/2026/02/Qubix-Logo-02.png"
-    className="h-6 mx-auto opacity-90 hover:opacity-100 transition"
-  />
-</div>
-      {/* BOTTOM NAV */}
-      <div className="bottom-nav">
-        <NavItem icon={Calendar} label="Home" />
-        <NavItem icon={Users} label="Speakers" />
-        <NavItem icon={Bell} label="Alerts" />
-        <NavItem icon={User} label="Profile" />
-      </div>
-
-      {/* POPUP */}
       {popup && (
         <div className="popup">
           <div className="popup-box">Coming Soon 🚀</div>
@@ -189,29 +116,11 @@ if (loading) {
   );
 }
 
-/* TILE */
-function Tile({ icon: Icon, label, red, onClick }) {
+function Tile({ icon: Icon, label, onClick }) {
   return (
-    <motion.div
-      whileTap={{ scale: 0.92 }}
-      whileHover={{ scale: 1.05 }}
-      onClick={onClick}
-      className={`tile ${red ? "tile-red" : ""}`}
-    >
-      <div className={`icon ${red ? "icon-red" : ""}`}>
-        <Icon size={18} />
-      </div>
-      <div className="label">{label}</div>
+    <motion.div whileTap={{ scale: 0.92 }} onClick={onClick} className="tile">
+      <Icon size={18} />
+      <div>{label}</div>
     </motion.div>
-  );
-}
-
-/* NAV ITEM */
-function NavItem({ icon: Icon, label }) {
-  return (
-    <div className="nav-item">
-      <Icon size={20} />
-      <span>{label}</span>
-    </div>
   );
 }
