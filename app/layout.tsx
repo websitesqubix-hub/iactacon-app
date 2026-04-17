@@ -15,17 +15,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "IACTACON 2027",
   description: "Official Conference App",
-  
+
   manifest: "/manifest.json",
 
-  themeColor: "#1e3a8a",
-
   icons: {
-    icon: "https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg",
-    apple: "https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg",
+    icon: "/favicon.ico",
+    apple: "/icon-192.png",
+  },
+
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "IACTACON 2027",
   },
 };
-
 export default function RootLayout({
   children,
 }: {
