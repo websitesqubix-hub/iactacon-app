@@ -8,18 +8,39 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    const res = await fetch("https://iactacon2027.com/data/registrations.json");
-    const data = await res.json();
 
-    const user = data.find(
-      (u: any) => u.reg_id === regId && u.phone === phone
-    );
+    // ✅ DEMO LOGIN
+    if (regId === "demo" && phone === "1234") {
+      const demoUser = {
+        name: "Demo User",
+        reg_id: "DEMO001",
+        phone: "1234",
+        type: "Delegate"
+      };
 
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(demoUser));
       window.location.href = "/";
-    } else {
-      setError("Invalid ID or Phone");
+      return;
+    }
+
+    // ✅ REAL LOGIN (API)
+    try {
+      const res = await fetch("https://iactacon2027.com/data/registrations.json");
+      const data = await res.json();
+
+      const user = data.find(
+        (u: any) => u.reg_id === regId && u.phone === phone
+      );
+
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        window.location.href = "/";
+      } else {
+        setError("Invalid ID or Phone");
+      }
+
+    } catch (err) {
+      setError("Server error. Use demo login.");
     }
   };
 
@@ -28,18 +49,20 @@ export default function Login() {
 
       <div className="login-box">
 
-        {/* 🔥 HEADER TEXT */}
-        <h2 style={{
-          textAlign: "center",
-          marginBottom: "12px",
-          color: "#0a2a6e",
-          fontWeight: "700",
-          letterSpacing: "1px"
-        }}>
+        {/* HEADER */}
+        <h2
+          style={{
+            textAlign: "center",
+            marginBottom: "12px",
+            color: "#0a2a6e",
+            fontWeight: "700",
+            letterSpacing: "1px"
+          }}
+        >
           IACTACON 2027 KOLKATA
         </h2>
 
-        {/* 🔥 LOGOS SAME SIZE + CIRCULAR */}
+        {/* LOGOS */}
         <div className="login-logos">
 
           <div className="logo-circle">
@@ -81,9 +104,19 @@ export default function Login() {
             </p>
           )}
 
+          {/* DEMO INFO */}
+          <p style={{
+            fontSize: 12,
+            textAlign: "center",
+            marginTop: 10,
+            color: "#666"
+          }}>
+            Demo → ID: <b>demo</b> | Pass: <b>1234</b>
+          </p>
+
         </div>
 
-        {/* 🔥 BOTTOM IMAGE */}
+        {/* BOTTOM IMAGE */}
         <img
           src="/login-page-bottom.png"
           style={{
