@@ -10,9 +10,8 @@ import {
   Bell,
   Book,
   Building,
-  Home,
-  User,
-} from "lucide-react";
+  User
+} from "lucide-react"; // ❌ Home REMOVED
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
