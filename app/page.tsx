@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   Calendar,
   Users,
@@ -10,7 +9,6 @@ import {
   Download,
   Bell,
 } from "lucide-react";
-import BottomNav from "../components/BottomNav";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -18,7 +16,7 @@ export default function Home() {
   const [time, setTime] = useState({ d: "--", h: "--", m: "--" });
   const [user, setUser] = useState<any>(null);
 
-  // ✅ LOGIN CHECK
+  // LOGIN CHECK
   useEffect(() => {
     const u = localStorage.getItem("user");
     if (!u) {
@@ -28,16 +26,9 @@ export default function Home() {
     }
   }, []);
 
-  // ✅ SERVICE WORKER
+  // COUNTDOWN
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js");
-    }
-  }, []);
-
-  // ✅ SPLASH + COUNTDOWN
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1500);
+    setTimeout(() => setLoading(false), 1000);
 
     const target = new Date("2027-02-19T09:00:00");
 
@@ -63,136 +54,93 @@ export default function Home() {
     setTimeout(() => setPopup(false), 1200);
   };
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-  };
-
-  // ✅ SPLASH SCREEN (FIXED SIZE)
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-white">
-        <div className="flex flex-col items-center gap-3 animate-fadeIn">
-
+      <div className="login-container">
+        <div className="login-box" style={{ textAlign: "center" }}>
           <img
             src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"
-            className="w-14 h-14 object-contain"
+            style={{ width: 50, margin: "auto" }}
           />
-
-          <img
-            src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"
-            className="h-6 object-contain"
-          />
-
-          <p className="text-blue-900 text-sm font-semibold">
-            IACTACON 2027
-          </p>
-
+          <p style={{ marginTop: 10 }}>Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 pb-28 overflow-y-auto">
+    <div className="app-bg">
 
       {/* HEADER */}
-      <div className="bg-blue-900 text-white p-4 rounded-b-3xl shadow-md relative">
-
-        <div className="flex items-center gap-3">
-          <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg" className="h-10"/>
-          <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg" className="h-6"/>
+      <div className="header">
+        <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"/>
+        <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"/>
+        <div>
+          <div className="title">IACTACON 2027</div>
+          <div className="subtitle">30th National Conference · Kolkata</div>
         </div>
-
-        <div className="mt-3">
-          <p className="text-sm opacity-80">Welcome</p>
-          <p className="text-lg font-semibold">{user?.name || "Delegate"}</p>
-        </div>
-
-        {/* LOGOUT */}
-        <button
-          onClick={logout}
-          className="absolute top-4 right-4 bg-white text-blue-900 text-xs px-3 py-1 rounded-lg"
-        >
-          Logout
-        </button>
       </div>
 
-      {/* COUNTDOWN */}
-      <div className="px-4 -mt-6">
-        <div className="bg-white rounded-xl shadow-md p-4 flex justify-between items-center">
+      <div className="strip">SAFETY · SCIENCE · SKILL</div>
 
+      <div className="container">
+
+        {/* COUNTDOWN */}
+        <div className="countdown">
           <div>
-            <p className="text-xs text-gray-500">CONFERENCE COUNTDOWN</p>
-            <p className="text-lg font-bold text-blue-900">
+            <div className="cd-label">CONFERENCE COUNTDOWN</div>
+            <div className="cd-time">
               {time.d} : {time.h} : {time.m}
-            </p>
+            </div>
           </div>
 
           <a
             href="https://iactacon2027.com/registration"
             target="_blank"
-            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
+            className="btn"
           >
-            Register
+            REGISTER
           </a>
+        </div>
+
+        {/* GRID */}
+        <div className="grid">
+
+          <Tile icon={<Calendar size={18}/>} label="Today's Program" onClick={comingSoon}/>
+          <Tile icon={<Users size={18}/>} label="Our Speakers" onClick={comingSoon}/>
+          <Tile icon={<FileText size={18}/>} label="Scientific Program" onClick={comingSoon}/>
+          <Tile icon={<Users size={18}/>} label="Attendees" onClick={comingSoon}/>
+
+          <Tile icon={<Users size={18}/>} label="Invite Friend" onClick={comingSoon}/>
+          <Tile icon={<MapPin size={18}/>} label="Venue Map" onClick={comingSoon}/>
+          <Tile icon={<Download size={18}/>} label="Certificate" onClick={comingSoon}/>
+          <Tile icon={<Bell size={18}/>} label="Quiz" onClick={comingSoon}/>
+
+          <Tile icon={<Bell size={18}/>} label="Feedback" onClick={comingSoon}/>
+          <Tile icon={<FileText size={18}/>} label="My Registration" onClick={comingSoon}/>
+          <Tile icon={<MapPin size={18}/>} label="Route Map" onClick={comingSoon}/>
+          <Tile icon={<FileText size={18}/>} label="Workshops" onClick={comingSoon}/>
 
         </div>
-      </div>
-
-      {/* FULL GRID */}
-      <div className="grid grid-cols-2 gap-4 p-4 mt-2">
-
-        <Tile icon={Calendar} label="Today's Program" onClick={comingSoon}/>
-        <Tile icon={Users} label="Our Speakers" onClick={comingSoon}/>
-        <Tile icon={FileText} label="Scientific Program" onClick={comingSoon}/>
-        <Tile icon={Users} label="Attendees" onClick={comingSoon}/>
-
-        <Tile icon={Users} label="Invite Friend" onClick={comingSoon}/>
-        <Tile icon={MapPin} label="Venue Map" onClick={comingSoon}/>
-        <Tile icon={Download} label="Certificate" onClick={comingSoon}/>
-        <Tile icon={Bell} label="Quiz" onClick={comingSoon}/>
-
-        <Tile icon={Bell} label="Feedback" onClick={comingSoon}/>
-        <Tile icon={FileText} label="My Registration" onClick={comingSoon}/>
-        <Tile icon={MapPin} label="Route Map" onClick={comingSoon}/>
-        <Tile icon={FileText} label="Workshops" onClick={comingSoon}/>
-
-        <Tile icon={FileText} label="Downloads" onClick={comingSoon}/>
-        <Tile icon={MapPin} label="Attractions" onClick={comingSoon}/>
-        <Tile icon={FileText} label="Venue Layout" onClick={comingSoon}/>
-        <Tile icon={Users} label="Exhibitors" onClick={comingSoon}/>
-
-        <Tile icon={MapPin} label="Accommodation" onClick={comingSoon}/>
-        <Tile icon={FileText} label="Lost & Found" onClick={comingSoon}/>
 
       </div>
 
       {/* POPUP */}
       {popup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30">
-          <div className="bg-white px-6 py-3 rounded-lg shadow-lg font-semibold">
-            Coming Soon 🚀
-          </div>
+        <div className="popup">
+          <div className="popup-box">Coming Soon 🚀</div>
         </div>
       )}
-
-      {/* BOTTOM NAV */}
-      <BottomNav />
 
     </div>
   );
 }
 
-function Tile({ icon: Icon, label, onClick }: any) {
+function Tile({ icon, label, onClick }: any) {
   return (
-    <motion.div
-      whileTap={{ scale: 0.92 }}
-      onClick={onClick}
-      className="bg-white rounded-xl shadow-md p-4 text-center transition hover:shadow-lg"
-    >
-      <Icon size={20} className="mx-auto mb-2 text-blue-900"/>
-      <div className="text-xs font-medium text-gray-700">{label}</div>
-    </motion.div>
+    <div className="tile" onClick={onClick}>
+      <div className="icon">{icon}</div>
+      <div className="label">{label}</div>
+    </div>
   );
 }
