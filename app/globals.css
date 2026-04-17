@@ -10,6 +10,13 @@ body {
   background: #eef2ff;
 }
 
+/* GLOBAL IMAGE FIX */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* APP CONTAINER */
 .app-bg {
   max-width: 420px;
@@ -28,8 +35,8 @@ body {
 }
 
 .header img {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background: #fff;
   padding: 4px;
   border-radius: 8px;
@@ -38,12 +45,12 @@ body {
 .title {
   color: #fff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .subtitle {
   color: #a7c7ff;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 /* STRIP */
@@ -54,10 +61,9 @@ body {
   font-size: 11px;
   padding: 5px;
   font-weight: 600;
-  letter-spacing: 0.5px;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 .container {
   padding: 16px;
 }
@@ -66,23 +72,21 @@ body {
 .countdown {
   background: #0a2a6e;
   border-radius: 16px;
-  padding: 16px;
+  padding: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .cd-label {
   color: #a7c7ff;
   font-size: 11px;
-  font-weight: 600;
 }
 
 .cd-time {
   color: white;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -93,40 +97,28 @@ body {
   padding: 8px 14px;
   border-radius: 10px;
   font-size: 12px;
-  font-weight: 600;
   text-decoration: none;
-  transition: 0.2s;
 }
 
-.btn:hover {
-  opacity: 0.9;
-}
-
-/* GRID */
+/* GRID FIXED */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 /* TILE */
 .tile {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.85);
   border-radius: 14px;
-  padding: 10px;
+  padding: 12px;
   text-align: center;
   cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.tile:hover {
-  transform: translateY(-3px);
-}
-
-.tile-red {
-  color: #c8102e;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 /* ICON */
@@ -141,10 +133,6 @@ body {
   background: #e0ecff;
 }
 
-.icon-red {
-  background: #ffe3e3;
-}
-
 /* LABEL */
 .label {
   font-size: 11px;
@@ -152,46 +140,66 @@ body {
   color: #0a2a6e;
 }
 
-/* INFO CARD */
-.info-card {
-  background: white;
-  margin-top: 18px;
-  padding: 14px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.info-card h3 {
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.info-row {
-  font-size: 12px;
-  color: #555;
-  margin-bottom: 4px;
-}
-
-/* BOTTOM NAV */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  max-width: 420px;
-  margin: auto;
-  background: white;
+/* LOGIN PAGE */
+.login-container {
+  min-height: 100vh;
   display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  border-top: 1px solid #eee;
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  font-size: 10px;
+  justify-content: center;
+  background: white;
+}
+
+.login-box {
+  width: 90%;
+  max-width: 360px;
+}
+
+.login-logos {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.login-logos img:first-child {
+  width: 48px;
+  height: 48px;
+}
+
+.login-logos img:last-child {
+  height: 28px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.login-btn {
+  width: 100%;
+  background: #c8102e;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: none;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 14px;
+  font-weight: 600;
   color: #0a2a6e;
 }
 
@@ -203,7 +211,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
 }
 
 .popup-box {
@@ -211,9 +218,4 @@ body {
   padding: 16px 24px;
   border-radius: 12px;
   font-weight: 600;
-}
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
 }
