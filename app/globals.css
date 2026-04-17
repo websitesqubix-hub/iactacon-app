@@ -5,7 +5,8 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  height: 100%;
   font-family: system-ui;
   background: #eef2ff;
 }
@@ -15,12 +16,14 @@ img {
   display: block;
 }
 
-/* APP */
+/* ================= APP ================= */
+
 .app-bg {
   max-width: 420px;
   margin: auto;
   min-height: 100vh;
   background: #f0f4ff;
+  position: relative;
 }
 
 /* HEADER */
@@ -50,6 +53,7 @@ img {
   font-size: 11px;
 }
 
+/* STRIP */
 .strip {
   background: #c8102e;
   color: white;
@@ -100,6 +104,11 @@ img {
   padding: 14px;
   border-radius: 12px;
   text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.icon {
+  margin-bottom: 6px;
 }
 
 /* LABEL */
@@ -151,23 +160,22 @@ img {
   justify-content: space-around;
   padding: 10px;
   border-top: 1px solid #eee;
+  z-index: 20;
 }
 
 .nav-item {
   font-size: 11px;
   cursor: pointer;
+  text-align: center;
 }
 
 .nav-item.active {
   color: #c8102e;
   font-weight: bold;
 }
-/* FULLSCREEN */
-html, body {
-  height: 100%;
-}
 
-/* BG PARTICLES */
+/* ================= PARTICLES ================= */
+
 .bg-particles {
   position: fixed;
   inset: 0;
@@ -178,59 +186,93 @@ html, body {
 .bg-particles span {
   position: absolute;
   font-size: 20px;
-  opacity: 0.08;
-  animation: float 12s linear infinite;
+  opacity: 0.06;
+  animation: float 14s linear infinite;
 }
 
-/* RANDOM POSITIONS */
-.bg-particles span:nth-child(1){ left:10%; top:80%; animation-delay:0s;}
-.bg-particles span:nth-child(2){ left:70%; top:90%; animation-delay:2s;}
-.bg-particles span:nth-child(3){ left:30%; top:95%; animation-delay:4s;}
-.bg-particles span:nth-child(4){ left:80%; top:85%; animation-delay:6s;}
-.bg-particles span:nth-child(5){ left:50%; top:90%; animation-delay:8s;}
+.bg-particles span:nth-child(1){ left:10%; top:80%;}
+.bg-particles span:nth-child(2){ left:70%; top:90%;}
+.bg-particles span:nth-child(3){ left:30%; top:95%;}
+.bg-particles span:nth-child(4){ left:80%; top:85%;}
+.bg-particles span:nth-child(5){ left:50%; top:90%;}
 
 @keyframes float {
   from { transform: translateY(0); }
   to { transform: translateY(-120vh); }
 }
 
-/* ENSURE UI ABOVE PARTICLES */
 .app-bg > * {
   position: relative;
   z-index: 1;
 }
-/* LOGIN SAFE */
+
+/* ================= LOGIN PAGE ================= */
+
 .login-page {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.login-box {
-  width: 90%;
-  max-width: 360px;
+/* TOP */
+.login-top {
+  text-align: center;
+  padding-top: 40px;
 }
 
+.login-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a2a6e;
+  margin-bottom: 16px;
+}
+
+/* LOGO ROW */
 .login-logos {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 14px;
 }
 
-.login-logos img {
-  width: 50px;
+/* 🔥 CIRCULAR LOGO FRAME */
+.logo-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e0ecff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-circle img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+}
+
+/* CENTER */
+.login-center {
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
 }
 
 .login-card {
+  width: 100%;
+  max-width: 360px;
   background: white;
-  padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border: 1px solid #f0f0f0;
 }
 
+/* INPUT */
 .login-input {
   width: 100%;
   padding: 12px;
@@ -239,6 +281,7 @@ html, body {
   border: 1px solid #ddd;
 }
 
+/* BUTTON */
 .login-btn {
   width: 100%;
   background: #c8102e;
@@ -246,29 +289,19 @@ html, body {
   padding: 12px;
   border-radius: 10px;
   border: none;
+  font-weight: 600;
 }
 
-/* PARTICLES */
-.bg-particles {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+/* DEMO TEXT */
+.demo-text {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 10px;
+  color: #777;
 }
 
-.bg-particles span {
-  position: absolute;
-  font-size: 20px;
-  opacity: 0.08;
-  animation: float 12s linear infinite;
-}
-
-@keyframes float {
-  from { transform: translateY(0); }
-  to { transform: translateY(-120vh); }
-}
-
-.main-app > * {
-  position: relative;
-  z-index: 1;
+/* BOTTOM IMAGE */
+.login-bottom img {
+  width: 100%;
+  display: block;
 }
