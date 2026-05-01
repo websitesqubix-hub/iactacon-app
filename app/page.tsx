@@ -1,83 +1,46 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Calendar,
   Users,
   FileText,
   MapPin,
-  Download,
-  Bell,
-  Book,
-  Building,
+  Home,
   User,
+  Book,
+  Building
 } from "lucide-react";
 
-export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [popup, setPopup] = useState(false);
-  const [time, setTime] = useState({ d: "--", h: "--", m: "--" });
-  const [activeTab, setActiveTab] = useState("home");
+export default function HomePage() {
+  const [user, setUser] = useState<any>(null);
 
-  // LOGIN CHECK
   useEffect(() => {
     const u = localStorage.getItem("user");
-    if (!u) window.location.href = "/login";
+    if (!u) {
+      window.location.href = "/login";
+    } else {
+      setUser(JSON.parse(u));
+    }
   }, []);
-
-  // COUNTDOWN
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-
-    const target = new Date("2027-02-19T09:00:00");
-
-    const update = () => {
-      const diff = target.getTime() - new Date().getTime();
-      if (diff > 0) {
-        setTime({
-          d: Math.floor(diff / 86400000),
-          h: Math.floor((diff % 86400000) / 3600000),
-          m: Math.floor((diff % 3600000) / 60000),
-        });
-      }
-    };
-
-    update();
-    const i = setInterval(update, 60000);
-    return () => clearInterval(i);
-  }, []);
-
-  const comingSoon = () => {
-    setPopup(true);
-    setTimeout(() => setPopup(false), 1200);
-  };
 
   const logout = () => {
     localStorage.removeItem("user");
     window.location.href = "/login";
   };
 
-  if (loading) return null;
+  if (!user) return null;
 
   return (
     <div className="app-bg">
-
-      {/* 🔥 FLOATING BG */}
-      <div className="bg-particles">
-        <span>🏵️</span>
-        <span>🎨</span>
-        <span>🎭</span>
-        <span>🪔</span>
-        <span>🎶</span>
-      </div>
 
       {/* HEADER */}
       <div className="header">
         <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"/>
         <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"/>
         <div>
-          <div className="title">IACTACON 2027</div>
-          <div className="subtitle">30th National Conference · Kolkata</div>
+          <div className="title">IACTACON 2027 KOLKATA</div>
+          <div className="subtitle">Welcome {user.name}</div>
         </div>
       </div>
 
@@ -85,41 +48,25 @@ export default function Home() {
 
       <div className="container" style={{ paddingBottom: "80px" }}>
 
-        {/* COUNTDOWN */}
-        <div className="countdown">
-          <div>
-            <div className="cd-label">CONFERENCE COUNTDOWN</div>
-            <div className="cd-time">
-              {time.d} : {time.h} : {time.m}
-            </div>
-          </div>
-
-          <a
-            href="https://iactacon2027.com/registration"
-            target="_blank"
-            className="btn"
-          >
-            REGISTER
-          </a>
+        {/* USER INFO */}
+        <div className="info-card">
+          <h3>Registration Details</h3>
+          <div className="info-row">📧 {user.email}</div>
+          <div className="info-row">📱 {user.phone}</div>
+          <div className="info-row">🎟 {user.registration_type}</div>
+          <div className="info-row">📌 Status: {user.registration_status}</div>
         </div>
 
         {/* GRID */}
         <div className="grid">
 
-          <Tile icon={<Calendar size={18}/>} label="Today's Program" onClick={comingSoon}/>
-          <Tile icon={<Users size={18}/>} label="Our Speakers" onClick={comingSoon}/>
-          <Tile icon={<FileText size={18}/>} label="Scientific Program" onClick={comingSoon}/>
-          <Tile icon={<Users size={18}/>} label="Attendees" onClick={comingSoon}/>
+          <Tile icon={Calendar} label="Schedule"/>
+          <Tile icon={Users} label="Speakers"/>
+          <Tile icon={FileText} label="Abstract"/>
+          <Tile icon={MapPin} label="Venue"/>
 
-          <Tile icon={<Users size={18}/>} label="Invite Friend" onClick={comingSoon}/>
-          <Tile icon={<MapPin size={18}/>} label="Venue Map" onClick={comingSoon}/>
-          <Tile icon={<Download size={18}/>} label="Certificate" onClick={comingSoon}/>
-          <Tile icon={<Bell size={18}/>} label="Quiz" onClick={comingSoon}/>
-
-          <Tile icon={<Book size={18}/>} label="Abstract" onClick={comingSoon}/>
-          <Tile icon={<Building size={18}/>} label="Accommodation" onClick={comingSoon}/>
-          <Tile icon={<Bell size={18}/>} label="Feedback" onClick={comingSoon}/>
-          <Tile icon={<FileText size={18}/>} label="My Registration" onClick={comingSoon}/>
+          <Tile icon={Book} label="Scientific"/>
+          <Tile icon={Building} label="Accommodation"/>
 
         </div>
 
@@ -130,40 +77,31 @@ export default function Home() {
 
       </div>
 
-      {/* POPUP */}
-      {popup && (
-        <div className="popup">
-          <div className="popup-box">Coming Soon 🚀</div>
-        </div>
-      )}
-
       {/* BOTTOM NAV */}
       <div className="bottom-nav">
-        <Nav icon={<Calendar size={18}/>} label="Home" active={activeTab==="home"} onClick={()=>setActiveTab("home")}/>
-        <Nav icon={<FileText size={18}/>} label="Schedule" onClick={comingSoon}/>
-        <Nav icon={<Users size={18}/>} label="Speakers" onClick={comingSoon}/>
-        <Nav icon={<User size={18}/>} label="Profile" onClick={comingSoon}/>
+        <Nav icon={Home} label="Home" active />
+        <Nav icon={Calendar} label="Schedule" />
+        <Nav icon={Users} label="Speakers" />
+        <Nav icon={User} label="Profile" />
       </div>
 
     </div>
   );
 }
 
-/* TILE */
-function Tile({ icon, label, onClick }: any) {
+function Tile({ icon: Icon, label }: any) {
   return (
-    <div className="tile" onClick={onClick}>
-      <div className="icon">{icon}</div>
+    <div className="tile">
+      <div className="icon"><Icon size={18} /></div>
       <div className="label">{label}</div>
     </div>
   );
 }
 
-/* NAV */
-function Nav({ icon, label, active, onClick }: any) {
+function Nav({ icon: Icon, label, active }: any) {
   return (
-    <div className={`nav-item ${active ? "active" : ""}`} onClick={onClick}>
-      {icon}
+    <div className={`nav-item ${active ? "active" : ""}`}>
+      <Icon size={16} />
       <div>{label}</div>
     </div>
   );
