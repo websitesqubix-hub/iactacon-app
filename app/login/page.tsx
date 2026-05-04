@@ -2,36 +2,42 @@
 import { useState } from "react";
 
 export default function Login() {
-  const [id, setId] = useState("");
+  const [dob, setDob] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     setError("");
+
+    if (!dob || !phone) {
+      setError("Please enter both Date of Birth and Phone Number.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/guest?id=${id}`);
+      // Search by phone number
+      const cleanPhone = phone.replace(/\s+/g, "").replace(/^(\+91|91)/, "");
+
+      const res = await fetch(`/api/guest?phone=${cleanPhone}`);
       const data = await res.json();
 
       if (!res.ok || data.error || data.detail) {
-        setError("Registration ID not found.");
+        setError("No registration found for this phone number.");
         setLoading(false);
         return;
       }
 
-      // Match phone number
-      const inputPhone = phone.replace(/\s+/g, "");
-      const storedPhone = data.phone_national_number || "";
-
-      if (storedPhone !== inputPhone) {
-        setError("Phone number does not match.");
+      // Match Date of Birth
+      const storedDob = data.date_of_birth || "";
+      if (storedDob !== dob) {
+        setError("Date of Birth does not match.");
         setLoading(false);
         return;
       }
 
-      // Save full user profile to localStorage
       localStorage.setItem("user", JSON.stringify(data));
       window.location.href = "/";
 
@@ -58,23 +64,38 @@ export default function Login() {
 
       <div className="login-center">
         <div className="login-card">
+
+          <label className="login-label">Phone Number</label>
           <input
             className="login-input"
-            placeholder="Registration ID"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          />
-          <input
-            className="login-input"
-            placeholder="Phone Number (10 digits)"
-            type="password"
+            placeholder="10-digit mobile number"
+            type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          {error && <p style={{ color: "red", fontSize: "13px" }}>{error}</p>}
-          <button className="login-btn" onClick={handleLogin} disabled={loading}>
+
+          <label className="login-label">Date of Birth</label>
+          <input
+            className="login-input"
+            type="date"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+
+          {error && (
+            <p style={{ color: "red", fontSize: "13px", margin: "4px 0" }}>
+              {error}
+            </p>
+          )}
+
+          <button
+            className="login-btn"
+            onClick={handleLogin}
+            disabled={loading}
+          >
             {loading ? "Logging in..." : "Login"}
           </button>
+
         </div>
       </div>
 
