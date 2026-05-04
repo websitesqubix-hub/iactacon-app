@@ -28,15 +28,9 @@ export async function GET(req: NextRequest) {
 
     const data = await res.json();
 
-    // DEBUG: return phone fields clearly
-    return NextResponse.json({
-      ...data,
-      _debug: {
-        phone: data.phone,
-        phone_national_number: data.phone_national_number,
-        phone_country_code: data.phone_country_code,
-      }
-    });
+    // API wraps response in "guest" key — unwrap it
+    const guest = data.guest || data;
+    return NextResponse.json(guest);
 
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
