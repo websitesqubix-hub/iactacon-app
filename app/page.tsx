@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import {
   Calendar, Users, FileText, MapPin,
-  Home, User, Book, Building
+  Home, User, Book, Building, ChevronDown, ChevronUp
 } from "lucide-react";
 
 export default function HomePage() {
   const [user, setUser] = useState<any>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     const u = localStorage.getItem("user");
@@ -46,85 +47,124 @@ export default function HomePage() {
 
       <div className="container" style={{ paddingBottom: "80px" }}>
 
-        {/* PROFILE CARD */}
+        {/* PROFILE CARD — compact */}
         <div className="profile-card" style={{ marginTop: 16 }}>
 
-          {/* PHOTO */}
-          <div className="profile-photo">
+          {/* PHOTO + NAME + STATUS */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             {user.photo_download_url ? (
-              <img src={`/api/photo?id=${user.id}`} alt="Profile"/>
+              <img
+                src={`/api/photo?id=${user.id}`}
+                style={{
+                  width: 60, height: 60, borderRadius: "50%",
+                  objectFit: "cover", border: "3px solid #0a2a6e",
+                  flexShrink: 0
+                }}
+              />
             ) : (
-              <div className="profile-photo-placeholder">👤</div>
+              <div style={{
+                width: 60, height: 60, borderRadius: "50%",
+                background: "#eef2ff", border: "3px solid #0a2a6e",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 24, flexShrink: 0
+              }}>👤</div>
             )}
-          </div>
-
-          <div className="profile-name">{user.name}</div>
-          <div className="profile-id">ID: {user.id}</div>
-
-          <div style={{ textAlign: "center", marginBottom: 16 }}>
-            <span className={`status-badge ${statusClass}`}>
-              {user.registration_status?.toUpperCase()}
-            </span>
-          </div>
-
-          {/* PERSONAL INFO */}
-          <div className="info-section">
-            <div className="info-section-title">Personal Info</div>
-            <div className="info-row">
-              <span className="info-icon">📧</span>
-              <span className="info-label">Email</span>
-              <span className="info-value">{user.email}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-icon">📱</span>
-              <span className="info-label">Phone</span>
-              <span className="info-value">{user.phone}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-icon">🏥</span>
-              <span className="info-label">Institution</span>
-              <span className="info-value">{user.institution}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-icon">💼</span>
-              <span className="info-label">Designation</span>
-              <span className="info-value">{user.designation}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-icon">📍</span>
-              <span className="info-label">Location</span>
-              <span className="info-value">{user.city}, {user.state}</span>
-            </div>
-          </div>
-
-          {/* REGISTRATION INFO */}
-          <div className="info-section" style={{ marginTop: 10 }}>
-            <div className="info-section-title">Registration</div>
-            <div className="info-row">
-              <span className="info-icon">🎟</span>
-              <span className="info-label">Type</span>
-              <span className="info-value">{user.registration_type}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-icon">👥</span>
-              <span className="info-label">Category</span>
-              <span className="info-value">{user.registration_category}</span>
-            </div>
-            {user.workshop && (
-              <div className="info-row">
-                <span className="info-icon">🔬</span>
-                <span className="info-label">Workshop</span>
-                <span className="info-value">{user.workshop}</span>
+            <div style={{ flex: 1 }}>
+              <div style={{
+                fontWeight: 700, fontSize: 15,
+                color: "#0a2a6e", marginBottom: 3
+              }}>
+                {user.name}
               </div>
-            )}
-            {user.registration_amount && (
-              <div className="info-row">
-                <span className="info-icon">💰</span>
-                <span className="info-label">Amount</span>
-                <span className="info-value">₹{user.registration_amount}</span>
+              <div style={{ fontSize: 11, color: "#888", marginBottom: 6 }}>
+                ID: {user.id}
               </div>
-            )}
+              <span className={`status-badge ${statusClass}`}>
+                {user.registration_status?.toUpperCase()}
+              </span>
+            </div>
           </div>
+
+          {/* DROPDOWN TOGGLE */}
+          <button
+            onClick={() => setShowDetails(!showDetails)}
+            style={{
+              width: "100%", marginTop: 14,
+              background: "#f0f4ff", border: "none",
+              borderRadius: 10, padding: "9px 14px",
+              display: "flex", alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer", color: "#0a2a6e",
+              fontSize: 13, fontWeight: 600
+            }}
+          >
+            <span>View Registration Details</span>
+            {showDetails ? <ChevronUp size={16}/> : <ChevronDown size={16}/>}
+          </button>
+
+          {/* EXPANDABLE DETAILS */}
+          {showDetails && (
+            <div style={{ marginTop: 12 }}>
+
+              <div className="info-section">
+                <div className="info-section-title">Personal Info</div>
+                <div className="info-row">
+                  <span className="info-icon">📧</span>
+                  <span className="info-label">Email</span>
+                  <span className="info-value">{user.email}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-icon">📱</span>
+                  <span className="info-label">Phone</span>
+                  <span className="info-value">{user.phone}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-icon">🏥</span>
+                  <span className="info-label">Institution</span>
+                  <span className="info-value">{user.institution}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-icon">💼</span>
+                  <span className="info-label">Designation</span>
+                  <span className="info-value">{user.designation}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-icon">📍</span>
+                  <span className="info-label">Location</span>
+                  <span className="info-value">{user.city}, {user.state}</span>
+                </div>
+              </div>
+
+              <div className="info-section" style={{ marginTop: 10 }}>
+                <div className="info-section-title">Registration</div>
+                <div className="info-row">
+                  <span className="info-icon">🎟</span>
+                  <span className="info-label">Type</span>
+                  <span className="info-value">{user.registration_type}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-icon">👥</span>
+                  <span className="info-label">Category</span>
+                  <span className="info-value">{user.registration_category}</span>
+                </div>
+                {user.workshop && (
+                  <div className="info-row">
+                    <span className="info-icon">🔬</span>
+                    <span className="info-label">Workshop</span>
+                    <span className="info-value">{user.workshop}</span>
+                  </div>
+                )}
+                {user.registration_amount && (
+                  <div className="info-row">
+                    <span className="info-icon">💰</span>
+                    <span className="info-label">Amount</span>
+                    <span className="info-value">₹{user.registration_amount}</span>
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
 
         </div>
 
