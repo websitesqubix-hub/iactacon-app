@@ -47,7 +47,8 @@ export default function HomePage() {
             <img
               src={`/api/photo?id=${user.id}`}
               style={{
-                width: 90, height: 90,
+                width: 90,
+                height: 90,
                 borderRadius: "50%",
                 objectFit: "cover",
                 border: "3px solid #4f46e5"
@@ -69,9 +70,11 @@ export default function HomePage() {
           <div className="info-row">🎟 {user.registration_type}</div>
           <div className="info-row">👥 {user.registration_category}</div>
           <div className="info-row">
-            📌 Status: <strong style={{
-              color: user.registration_status === "approved" ? "green"
-                : user.registration_status === "rejected" ? "red" : "orange"
+            📌 Status:{" "}
+            <strong style={{
+              color:
+                user.registration_status === "approved" ? "green" :
+                user.registration_status === "rejected" ? "red" : "orange"
             }}>
               {user.registration_status?.toUpperCase()}
             </strong>

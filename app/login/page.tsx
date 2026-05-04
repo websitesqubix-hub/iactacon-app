@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 export default function Login() {
-  const [dob, setDob] = useState("");
+  const [id, setId] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -10,30 +10,31 @@ export default function Login() {
   const handleLogin = async () => {
     setError("");
 
-    if (!dob || !phone) {
-      setError("Please enter both Date of Birth and Phone Number.");
+    if (!id || !phone) {
+      setError("Please enter both Registration ID and Phone Number.");
       return;
     }
 
     setLoading(true);
 
     try {
-      // Search by phone number
-      const cleanPhone = phone.replace(/\s+/g, "").replace(/^(\+91|91)/, "");
-
-      const res = await fetch(`/api/guest?phone=${cleanPhone}`);
+      const res = await fetch(`/api/guest?id=${id}`);
       const data = await res.json();
 
       if (!res.ok || data.error || data.detail) {
-        setError("No registration found for this phone number.");
+        setError("Registration ID not found.");
         setLoading(false);
         return;
       }
 
-      // Match Date of Birth
-      const storedDob = data.date_of_birth || "";
-      if (storedDob !== dob) {
-        setError("Date of Birth does not match.");
+      // Normalize both phone numbers for comparison
+      const inputPhone = phone.replace(/\s+/g, "").replace(/^(\+91|91)/, "");
+      const storedPhone = (data.phone_national_number || data.phone || "")
+        .replace(/\s+/g, "")
+        .replace(/^(\+91|91)/, "");
+
+      if (!storedPhone || storedPhone !== inputPhone) {
+        setError("Phone number does not match.");
         setLoading(false);
         return;
       }
@@ -65,6 +66,14 @@ export default function Login() {
       <div className="login-center">
         <div className="login-card">
 
+          <label className="login-label">Registration ID</label>
+          <input
+            className="login-input"
+            placeholder="Enter your Registration ID"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
+
           <label className="login-label">Phone Number</label>
           <input
             className="login-input"
@@ -72,14 +81,6 @@ export default function Login() {
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-          />
-
-          <label className="login-label">Date of Birth</label>
-          <input
-            className="login-input"
-            type="date"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
           />
 
           {error && (
