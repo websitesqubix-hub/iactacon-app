@@ -34,6 +34,7 @@ export default function PresentationPage() {
         <div style={{background:"#eef2ff",borderLeft:"4px solid #0a2a6e",borderRadius:10,padding:14,marginBottom:20,fontSize:13,lineHeight:1.6}}>
           <strong style={{color:"#0a2a6e",display:"block",marginBottom:4}}>Guidelines</strong>
           Accepted: PPT, PPTX, PDF. Max 50MB. Submit 24hrs before your session.
+          <div style={{marginTop:8,padding:"8px 10px",background:"rgba(239,68,68,0.08)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:8,fontSize:11,color:"rgba(239,68,68,0.8)"}}>⚠️ Your presentation will only be used for Scientific Session purposes. All files will be deleted post-conference.</div>
         </div>
         <div className="upload-box" onClick={() => fileInputRef.current?.click()}>
           <input ref={fileInputRef} type="file" accept=".ppt,.pptx,.pdf" onChange={e => { setFile(e.target.files?.[0] || null); setSuccess(false); setError(""); }} style={{display:"none"}}/>

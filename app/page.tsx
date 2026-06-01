@@ -1,9 +1,40 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  Calendar, Users, FileText, MapPin,
-  Home, User, Book, Building, ChevronDown, ChevronUp
-} from "lucide-react";
+import { Home, Calendar, Star, FileText, User } from "lucide-react";
+
+const menuSections = [
+  {
+    title: "Conference",
+    items: [
+      { icon: "📅", label: "Schedule", href: "/schedule" },
+      { icon: "🎤", label: "Speakers", href: "/speakers" },
+      { icon: "📄", label: "Abstract", href: "/abstract" },
+      { icon: "🎓", label: "Workshop", href: "/workshop" },
+      { icon: "🖼️", label: "E-Poster", href: "/eposter" },
+      { icon: "⬇️", label: "Downloads", href: "/downloads" },
+    ]
+  },
+  {
+    title: "My Space",
+    items: [
+      { icon: "⭐", label: "My Activities", href: "/my-activities", gold: true },
+      { icon: "🏆", label: "Quiz & Certificate", href: "/quiz", gold: true },
+      { icon: "📊", label: "Presentation", href: "/presentation", gold: true },
+      { icon: "🎬", label: "Session Clips", href: "/session-clips" },
+      { icon: "🔍", label: "Lost & Found", href: "/lost-found" },
+      { icon: "👤", label: "My Profile", href: "/profile" },
+    ]
+  },
+  {
+    title: "Venue & More",
+    items: [
+      { icon: "🏛️", label: "Venue", href: "/venue" },
+      { icon: "🏨", label: "Accommodation", href: "/accommodation" },
+      { icon: "🏭", label: "Industry", href: "/industry", gold: true },
+      { icon: "🗺️", label: "Places to Go", href: "/places" },
+    ]
+  }
+];
 
 export default function HomePage() {
   const [user, setUser] = useState<any>(null);
@@ -11,210 +42,134 @@ export default function HomePage() {
 
   useEffect(() => {
     const u = localStorage.getItem("user");
-    if (!u) {
-      window.location.href = "/login";
-    } else {
-      setUser(JSON.parse(u));
-    }
+    if (!u) { window.location.href = "/login"; return; }
+    setUser(JSON.parse(u));
   }, []);
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("remembered_user");
     window.location.href = "/login";
   };
 
   if (!user) return null;
 
-  const statusClass =
-    user.registration_status === "approved" ? "status-approved" :
-    user.registration_status === "rejected" ? "status-rejected" :
-    "status-pending";
+  const statusColor = user.registration_status === "approved" ? "#d4af37" :
+    user.registration_status === "rejected" ? "#ef4444" : "#d4af37";
 
   return (
-    <div className="app-bg">
+    <div style={{ background:"#1a0533", minHeight:"100vh", fontFamily:"system-ui,-apple-system,sans-serif", paddingBottom:70, position:"relative" }}>
 
-      {/* HEADER */}
-      <div className="header">
-        <img src="https://iactacon2027.com/wp-content/uploads/2026/02/cropped-logo-1.jpeg"/>
-        <img src="https://iactacon2027.com/wp-content/uploads/2026/02/logo-2.jpeg"/>
-        <div>
-          <div className="title">IACTACON 2027 KOLKATA</div>
-          <div className="subtitle">Welcome, {user.name}</div>
+      {/* DOT GRID */}
+      <div style={{ position:"fixed", inset:0, backgroundImage:"radial-gradient(circle, rgba(167,139,250,0.08) 1px, transparent 1px)", backgroundSize:"28px 28px", pointerEvents:"none", zIndex:0 }} />
+
+      {/* HERO VIDEO */}
+      <div style={{ position:"relative", width:"100%", height:220, overflow:"hidden" }}>
+        <video autoPlay loop muted playsInline
+          style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
+          src="https://iactacon2027.com/wp-content/uploads/2026/06/mp4.mp4"
+        />
+        <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, rgba(26,5,51,0.25) 0%, rgba(26,5,51,0.55) 60%, #1a0533 100%)" }} />
+        <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0 16px 16px" }}>
+          <div style={{ display:"inline-block", background:"rgba(212,175,55,0.2)", border:"1px solid rgba(212,175,55,0.5)", borderRadius:20, padding:"3px 12px", color:"#d4af37", fontSize:10, fontWeight:600, letterSpacing:1.5, textTransform:"uppercase" as const, marginBottom:6 }}>
+            IACTACON 2027 · Kolkata
+          </div>
+          <div style={{ color:"white", fontSize:22, fontWeight:800, lineHeight:1.1 }}>
+            30th National
+          </div>
+          <div style={{ fontSize:22, fontWeight:800, background:"linear-gradient(135deg,#d4af37,#f0d060)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", lineHeight:1.1, marginBottom:4 }}>
+            Conference
+          </div>
+          <div style={{ color:"rgba(196,181,253,0.8)", fontSize:11 }}>
+            19–21 Feb 2027 · Ozone Convention Centre, Newtown
+          </div>
         </div>
       </div>
 
-      <div className="strip">SAFETY · SCIENCE · SKILL</div>
+      {/* PROFILE STRIP */}
+      <div style={{ margin:"0 12px", marginTop:-20, position:"relative", zIndex:2, background:"linear-gradient(135deg,rgba(124,58,237,0.35),rgba(99,102,241,0.2))", border:"1px solid rgba(212,175,55,0.35)", borderRadius:14, padding:"12px 14px", display:"flex", alignItems:"center", gap:12, cursor:"pointer" }}
+        onClick={() => setShowDetails(!showDetails)}>
+        <div style={{ width:46, height:46, borderRadius:"50%", border:"2px solid #d4af37", background:"rgba(212,175,55,0.1)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>
+          {user.photo_download_url ? <img src={`/api/photo?id=${user.id}`} style={{ width:46, height:46, borderRadius:"50%", objectFit:"cover" }}/> : "👤"}
+        </div>
+        <div style={{ flex:1 }}>
+          <div style={{ color:"white", fontWeight:700, fontSize:14 }}>{user.name}</div>
+          <div style={{ color:"rgba(196,181,253,0.6)", fontSize:10, fontFamily:"monospace" }}>
+            {user.id || user.registration_id}
+          </div>
+        </div>
+        <div style={{ background:"rgba(212,175,55,0.15)", border:"1px solid rgba(212,175,55,0.4)", borderRadius:20, padding:"3px 10px", color:"#d4af37", fontSize:10, fontWeight:600 }}>
+          {user.registration_status?.toUpperCase() || "PENDING"}
+        </div>
+      </div>
 
-      <div className="container" style={{ paddingBottom: "80px" }}>
+      {/* PROFILE DETAILS DROPDOWN */}
+      {showDetails && (
+        <div style={{ margin:"8px 12px 0", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(212,175,55,0.2)", borderRadius:12, padding:14, position:"relative", zIndex:2 }}>
+          {[
+            { icon:"📧", label:"Email", value: user.email },
+            { icon:"📱", label:"Phone", value: user.phone },
+            { icon:"🏥", label:"Institution", value: user.institution },
+            { icon:"🎟", label:"Type", value: user.registration_type },
+            { icon:"👥", label:"Category", value: user.registration_category },
+          ].filter(r => r.value).map((row, i) => (
+            <div key={i} style={{ display:"flex", gap:8, padding:"6px 0", borderBottom: i < 4 ? "1px solid rgba(167,139,250,0.1)" : "none", alignItems:"flex-start" }}>
+              <span style={{ fontSize:14, minWidth:22 }}>{row.icon}</span>
+              <span style={{ fontSize:11, color:"rgba(167,139,250,0.6)", minWidth:70 }}>{row.label}</span>
+              <span style={{ fontSize:11, color:"#ede9fe", flex:1 }}>{row.value}</span>
+            </div>
+          ))}
+          <button onClick={logout} style={{ marginTop:12, width:"100%", padding:"8px 0", background:"rgba(239,68,68,0.15)", border:"1px solid rgba(239,68,68,0.3)", borderRadius:8, color:"#fca5a5", fontSize:12, fontWeight:600, cursor:"pointer" }}>
+            Logout
+          </button>
+        </div>
+      )}
 
-        {/* PROFILE CARD — compact */}
-        <div className="profile-card" style={{ marginTop: 16 }}>
-
-          {/* PHOTO + NAME + STATUS */}
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            {user.photo_download_url ? (
-              <img
-                src={`/api/photo?id=${user.id}`}
-                style={{
-                  width: 60, height: 60, borderRadius: "50%",
-                  objectFit: "cover", border: "3px solid #0a2a6e",
-                  flexShrink: 0
-                }}
-              />
-            ) : (
-              <div style={{
-                width: 60, height: 60, borderRadius: "50%",
-                background: "#eef2ff", border: "3px solid #0a2a6e",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 24, flexShrink: 0
-              }}>👤</div>
-            )}
-            <div style={{ flex: 1 }}>
-              <div style={{
-                fontWeight: 700, fontSize: 15,
-                color: "#0a2a6e", marginBottom: 3
-              }}>
-                {user.name}
-              </div>
-              <div style={{ fontSize: 11, color: "#888", marginBottom: 6 }}>
-                ID: {user.id}
-              </div>
-              <span className={`status-badge ${statusClass}`}>
-                {user.registration_status?.toUpperCase()}
-              </span>
+      {/* MENU SECTIONS */}
+      <div style={{ padding:"0 12px", position:"relative", zIndex:2 }}>
+        {menuSections.map((section, si) => (
+          <div key={si}>
+            <div style={{ padding:"14px 2px 8px", display:"flex", alignItems:"center", gap:8 }}>
+              <span style={{ color:"#d4af37", fontSize:11, fontWeight:700, letterSpacing:1, textTransform:"uppercase" as const }}>{section.title}</span>
+              <div style={{ flex:1, height:1, background:"linear-gradient(90deg,rgba(212,175,55,0.3),transparent)" }} />
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:8 }}>
+              {section.items.map((item, ii) => (
+                <a key={ii} href={item.href} style={{ textDecoration:"none" }}>
+                  <div style={{
+                    background: item.gold ? "rgba(212,175,55,0.08)" : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${item.gold ? "rgba(212,175,55,0.35)" : "rgba(167,139,250,0.2)"}`,
+                    borderRadius:14, padding:"14px 8px", textAlign:"center", cursor:"pointer",
+                  }}>
+                    <div style={{ fontSize:24, marginBottom:6 }}>{item.icon}</div>
+                    <div style={{ color:"rgba(220,210,255,0.9)", fontSize:10, fontWeight:600, lineHeight:1.3 }}>{item.label}</div>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
-
-          {/* DROPDOWN TOGGLE */}
-          <button
-            onClick={() => setShowDetails(!showDetails)}
-            style={{
-              width: "100%", marginTop: 14,
-              background: "#f0f4ff", border: "none",
-              borderRadius: 10, padding: "9px 14px",
-              display: "flex", alignItems: "center",
-              justifyContent: "space-between",
-              cursor: "pointer", color: "#0a2a6e",
-              fontSize: 13, fontWeight: 600
-            }}
-          >
-            <span>View Registration Details</span>
-            {showDetails ? <ChevronUp size={16}/> : <ChevronDown size={16}/>}
-          </button>
-
-          {/* EXPANDABLE DETAILS */}
-          {showDetails && (
-            <div style={{ marginTop: 12 }}>
-
-              <div className="info-section">
-                <div className="info-section-title">Personal Info</div>
-                <div className="info-row">
-                  <span className="info-icon">📧</span>
-                  <span className="info-label">Email</span>
-                  <span className="info-value">{user.email}</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-icon">📱</span>
-                  <span className="info-label">Phone</span>
-                  <span className="info-value">{user.phone}</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-icon">🏥</span>
-                  <span className="info-label">Institution</span>
-                  <span className="info-value">{user.institution}</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-icon">💼</span>
-                  <span className="info-label">Designation</span>
-                  <span className="info-value">{user.designation}</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-icon">📍</span>
-                  <span className="info-label">Location</span>
-                  <span className="info-value">{user.city}, {user.state}</span>
-                </div>
-              </div>
-
-              <div className="info-section" style={{ marginTop: 10 }}>
-                <div className="info-section-title">Registration</div>
-                <div className="info-row">
-                  <span className="info-icon">🎟</span>
-                  <span className="info-label">Type</span>
-                  <span className="info-value">{user.registration_type}</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-icon">👥</span>
-                  <span className="info-label">Category</span>
-                  <span className="info-value">{user.registration_category}</span>
-                </div>
-                {user.workshop && (
-                  <div className="info-row">
-                    <span className="info-icon">🔬</span>
-                    <span className="info-label">Workshop</span>
-                    <span className="info-value">{user.workshop}</span>
-                  </div>
-                )}
-                {user.registration_amount && (
-                  <div className="info-row">
-                    <span className="info-icon">💰</span>
-                    <span className="info-label">Amount</span>
-                    <span className="info-value">₹{user.registration_amount}</span>
-                  </div>
-                )}
-              </div>
-
-            </div>
-          )}
-
-        </div>
-
-        {/* QUICK ACCESS */}
-        <div className="section-header">
-          <h2>Quick Access</h2>
-          <div className="section-line"></div>
-        </div>
-
-        <div className="grid">
-          <Tile icon={Calendar} label="Schedule" href="/schedule"/>
-          <Tile icon={Users} label="Speakers" href="/speakers"/>
-          <Tile icon={FileText} label="Abstract" href="/abstract"/>
-          <Tile icon={MapPin} label="Venue" href="#"/>
-          <Tile icon={Book} label="Scientific" href="#"/>
-          <Tile icon={Building} label="Accommodation" href="#"/>
-        </div>
-
-        <div className="logout">
-          <button onClick={logout}>Logout</button>
-        </div>
-
+        ))}
       </div>
 
       {/* BOTTOM NAV */}
-      <div className="bottom-nav">
-        <Nav icon={Home} label="Home" href="/" active />
-        <Nav icon={Calendar} label="Schedule" href="/schedule"/>
-        <Nav icon={FileText} label="Abstract" href="/abstract"/>
-        <Nav icon={User} label="Profile" href="#"/>
+      <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:480, background:"rgba(26,5,51,0.97)", borderTop:"1px solid rgba(212,175,55,0.2)", display:"flex", justifyContent:"space-around", padding:"8px 0 12px", zIndex:20 }}>
+        {[
+          { icon: <Home size={18}/>, label:"Home", href:"/" },
+          { icon: <Calendar size={18}/>, label:"Schedule", href:"/schedule" },
+          { icon: <Star size={18}/>, label:"Wishlist", href:"/my-activities" },
+          { icon: <FileText size={18}/>, label:"Abstract", href:"/abstract" },
+          { icon: <User size={18}/>, label:"Profile", href:"/profile" },
+        ].map((n, i) => (
+          <a key={i} href={n.href} style={{ textDecoration:"none", textAlign:"center", color: i===0 ? "#d4af37" : "rgba(167,139,250,0.6)", display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+            {n.icon}
+            <span style={{ fontSize:9, fontWeight:600 }}>{n.label}</span>
+          </a>
+        ))}
       </div>
 
+      <style>{`
+        @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+      `}</style>
     </div>
-  );
-}
-
-function Tile({ icon: Icon, label, href }: any) {
-  return (
-    <a href={href} className="tile">
-      <div className="icon"><Icon size={22} /></div>
-      <div className="label">{label}</div>
-    </a>
-  );
-}
-
-function Nav({ icon: Icon, label, href, active }: any) {
-  return (
-    <a href={href} className={`nav-item ${active ? "active" : ""}`}>
-      <Icon size={18} />
-      <div>{label}</div>
-    </a>
   );
 }

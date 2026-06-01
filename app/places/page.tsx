@@ -10,6 +10,7 @@ const places = [
   {name:"Park Street",category:"Food & Culture",dist:"15 km",desc:"Kolkata restaurant mile - Bengali cuisine, rolls, mishti doi.",emoji:"🍽️",color:"#c8102e",maps:"https://maps.google.com/?q=Park+Street+Kolkata"},
   {name:"Rabindra Sarobar Lake",category:"Nature",dist:"16 km",desc:"Peaceful lakeside park for morning walks.",emoji:"🦢",color:"#0369a1",maps:"https://maps.google.com/?q=Rabindra+Sarobar+Kolkata"},
   {name:"Marble Palace",category:"Heritage",dist:"18 km",desc:"19th century mansion with European artworks.",emoji:"🏰",color:"#7c3aed",maps:"https://maps.google.com/?q=Marble+Palace+Kolkata"},
+  {name:"Mother\'s Wax Museum",category:"Heritage",dist:"12 km",desc:"Kolkata\'s premier wax museum featuring lifelike statues of celebrities and historical figures.",emoji:"🗿",color:"#7c3aed",maps:"https://maps.google.com/?q=Mothers+Wax+Museum+Kolkata"},
 ];
 const categories = ["All","Heritage","Nature","Food & Culture","Spiritual","Landmark"];
 export default function PlacesPage() {
