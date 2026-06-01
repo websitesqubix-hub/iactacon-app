@@ -3,11 +3,11 @@ import { ArrowLeft, Download } from "lucide-react";
 
 const items = [
   { icon:"📜", title:"Certificate of Participation", sub:"Download your attendance certificate", available:false },
-  { icon:"📋", title:"Conference Brochure", sub:"Official IACTACON 2027 brochure", available:True, url:"https://iactacon2027.com/brochure" },
-  { icon:"📅", title:"Conference Agenda", sub:"Full programme schedule", available:True, url:"https://iactacon2027.com/agenda" },
-  { icon:"🎬", title:"Session Videos", sub:"Recorded sessions from all halls", available:False },
-  { icon:"📊", title:"Presentation Files", sub:"Speaker presentation downloads", available:False },
-  { icon:"📸", title:"Photo Gallery", sub:"Conference photo album", available:False },
+  { icon:"📋", title:"Conference Brochure", sub:"Official IACTACON 2027 brochure", available:true, url:"https://iactacon2027.com/brochure" },
+  { icon:"📅", title:"Conference Agenda", sub:"Full programme schedule", available:true, url:"https://iactacon2027.com/agenda" },
+  { icon:"🎬", title:"Session Videos", sub:"Recorded sessions from all halls", available:false },
+  { icon:"📊", title:"Presentation Files", sub:"Speaker presentation downloads", available:false },
+  { icon:"📸", title:"Photo Gallery", sub:"Conference photo album", available:false },
 ];
 
 export default function DownloadsPage() {
