@@ -1,4 +1,34 @@
 "use client";
+const icons: Record<string, string> = {
+  "calendar": "M8 2v3M16 2v3M3 8h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z",
+  "microphone": "M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8",
+  "file-text": "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8",
+  "school": "M22 10v6M2 10l10-5 10 5-10 5-10-5zM6 12v5c3 3 9 3 12 0v-5",
+  "layout": "M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z",
+  "download": "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3",
+  "star": "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z",
+  "award": "M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12",
+  "presentation": "M2 3h20v14H2zM8 21h8M12 17v4",
+  "video": "M23 7l-7 5 7 5V7zM1 5h15a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H1a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z",
+  "search": "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.35-4.35",
+  "user": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",
+  "building": "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10",
+  "bed": "M3 7v13M21 7v13M3 12h18M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4",
+  "briefcase": "M20 7H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M12 12v4M10 14h4",
+  "map-pin": "M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
+};
+
+function IconSVG({ name, gold }: { name: string; gold?: boolean }) {
+  const d = icons[name] || icons["star"];
+  const color = gold ? "#d4af37" : "rgba(196,181,253,0.85)";
+  return (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d={d}/>
+    </svg>
+  );
+}
+
+
 import { useEffect, useState } from "react";
 import { Home, Calendar, Star, FileText, User } from "lucide-react";
 
@@ -6,32 +36,32 @@ const menuSections = [
   {
     title: "Conference",
     items: [
-      { icon: "📅", label: "Schedule", href: "/schedule" },
-      { icon: "🎤", label: "Speakers", href: "/speakers" },
-      { icon: "📄", label: "Abstract", href: "/abstract" },
-      { icon: "🎓", label: "Workshop", href: "/workshop" },
-      { icon: "🖼️", label: "E-Poster", href: "/eposter" },
-      { icon: "⬇️", label: "Downloads", href: "/downloads" },
+      { icon: "calendar", label: "Schedule", href: "/schedule" },
+      { icon: "microphone", label: "Speakers", href: "/speakers" },
+      { icon: "file-text", label: "Abstract", href: "/abstract" },
+      { icon: "school", label: "Workshop", href: "/workshop" },
+      { icon: "layout", label: "E-Poster", href: "/eposter" },
+      { icon: "download", label: "Downloads", href: "/downloads" },
     ]
   },
   {
     title: "My Space",
     items: [
-      { icon: "⭐", label: "My Activities", href: "/my-activities", gold: true },
-      { icon: "🏆", label: "Quiz & Certificate", href: "/quiz", gold: true },
-      { icon: "📊", label: "Presentation", href: "/presentation", gold: true },
-      { icon: "🎬", label: "Session Clips", href: "/session-clips" },
-      { icon: "🔍", label: "Lost & Found", href: "/lost-found" },
-      { icon: "👤", label: "My Profile", href: "/profile" },
+      { icon: "star", label: "My Activities", href: "/my-activities", gold: true },
+      { icon: "award", label: "Quiz & Cert.", href: "/quiz", gold: true },
+      { icon: "presentation", label: "Presentation", href: "/presentation", gold: true },
+      { icon: "video", label: "Session Clips", href: "/session-clips" },
+      { icon: "search", label: "Lost & Found", href: "/lost-found" },
+      { icon: "user", label: "My Profile", href: "/profile" },
     ]
   },
   {
     title: "Venue & More",
     items: [
-      { icon: "🏛️", label: "Venue", href: "/venue" },
-      { icon: "🏨", label: "Accommodation", href: "/accommodation" },
-      { icon: "🏭", label: "Industry", href: "/industry", gold: true },
-      { icon: "🗺️", label: "Places to Go", href: "/places" },
+      { icon: "building", label: "Venue", href: "/venue" },
+      { icon: "bed", label: "Accommodation", href: "/accommodation" },
+      { icon: "briefcase", label: "Industry", href: "/industry", gold: true },
+      { icon: "map-pin", label: "Places to Go", href: "/places" },
     ]
   }
 ];
@@ -141,8 +171,8 @@ export default function HomePage() {
                     border: `1px solid ${item.gold ? "rgba(212,175,55,0.35)" : "rgba(167,139,250,0.2)"}`,
                     borderRadius:14, padding:"14px 8px", textAlign:"center", cursor:"pointer",
                   }}>
-                    <div style={{ fontSize:24, marginBottom:6 }}>{item.icon}</div>
-                    <div style={{ color:"rgba(220,210,255,0.9)", fontSize:10, fontWeight:600, lineHeight:1.3 }}>{item.label}</div>
+                    <IconSVG name={item.icon} gold={item.gold} />
+                    <div style={{ color:"rgba(220,210,255,0.9)", fontSize:10, fontWeight:600, lineHeight:1.3, marginTop:6 }}>{item.label}</div>
                   </div>
                 </a>
               ))}
