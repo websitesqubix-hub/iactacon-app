@@ -180,6 +180,25 @@ export default function Login() {
         </div>
       </div>
 
+      {/* INLINE VIDEO */}
+      <div style={{
+        position: "relative", zIndex: 2,
+        width: "100%", maxWidth: 360,
+        borderRadius: 16, overflow: "hidden",
+        border: "1px solid rgba(167,139,250,0.3)",
+        height: 160,
+      }}>
+        <video autoPlay loop muted playsInline
+          style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
+          src="https://iactacon2027.com/wp-content/uploads/2026/06/Watercolour-sketch-art-scene-with-iconic-bridge-historic-buildings-yellow-taxi-cab-and-tram-by-the-waterfront-soft-painted-textures-artistic-brushstrokes-dreamy-atmospheric-quality.mp4"
+        />
+        <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom, rgba(26,5,51,0.2), rgba(26,5,51,0.5))"}}>
+          <div style={{position:"absolute",bottom:10,left:12,color:"white",fontSize:11,fontWeight:600,textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>
+            📍 Kolkata — Venue of IACTACON 2027
+          </div>
+        </div>
+      </div>
+
       {/* LOGIN FORM */}
       <div style={{ width: "100%", maxWidth: 360, position: "relative", zIndex: 2, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(167,139,250,0.25)", borderRadius: 18, padding: "16px 16px 14px" }}>
 
