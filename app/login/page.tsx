@@ -70,6 +70,7 @@ export default function Login() {
 
       {/* HERO */}
       <div style={{ position:"relative", background:"linear-gradient(150deg,#1a3a5c 0%,#3d6b82 60%,#5b8fa8 100%)", padding:"28px 20px 44px", overflow:"hidden", flexShrink:0 }}>
+        <video autoPlay loop muted playsInline style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", opacity:0.18, pointerEvents:"none", zIndex:0 }} src="https://iactacon2027.com/wp-content/uploads/2026/06/Watercolour-sketch-art-scene-with-iconic-bridge-historic-buildings-yellow-taxi-cab-and-tram-by-the-waterfront-soft-painted-textures-artistic-brushstrokes-dreamy-atmospheric-quality.mp4"/>
         <div style={{ position:"absolute", top:-30, right:-30, width:130, height:130, borderRadius:"50%", border:"1px solid rgba(201,168,76,0.3)", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", top:-10, right:-10, width:86, height:86, borderRadius:"50%", border:"1px solid rgba(201,168,76,0.15)", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", bottom:30, left:0, right:0, height:1, background:"linear-gradient(90deg,transparent,rgba(201,168,76,0.4),transparent)", pointerEvents:"none" }}/>
